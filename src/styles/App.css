@@ -1,7 +1,9 @@
 nav {
-  padding: 10px
+  padding: 10px;
 }
 
 main {
-  padding: 10px
+  padding: 10px;
+  overflow-y: scroll;
+  margin-bottom: 75px
 }

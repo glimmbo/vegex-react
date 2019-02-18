@@ -1,28 +1,135 @@
 import React, { Component } from 'react';
 import './styles/App.css';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import AuthRoute from './components/AuthRoute'
+import { User, Session } from './requests';
 import Nav from './components/Nav'
 import SignInPage from './components/SignInPage'
+import SignUpPage from './components/SignUpPage'
 import ProfilePage from './components/ProfilePage'
-import InventoryPage from './components/InventoryPage'
-import NotificationsPage from './components/NotificationsPage'
-import OffersPage from './components/OffersPage'
-import TradesPage from './components/TradesPage'
+import EditProfilePage from './components/EditProfilePage'
+import OpenTradesPage from './components/OpenTradesPage'
+import TradesPage from './components/MyTradesPage'
 import TradeRoom from './components/TradeRoom'
+import LocalMarketPage from './components/LocalMarketPage'
+import NewTrade from './components/NewTrade'
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      currentUser: null,
+      loading: true
+    };
+
+    this.getCurrentUser = this.getCurrentUser.bind(this);
+    this.destroySession = this.destroySession.bind(this);
+  }
+
+  destroySession() {
+    this.setState({
+      currentUser: null
+    });
+    Session.destroy();
+    sessionStorage.clear()
+  }
+
+  getCurrentUser() {
+    console.log("getCurrentUser()")
+    return User.current().then(data => {
+      const { current_user: currentUser } = data;
+      console.log(currentUser)
+      if (currentUser) {
+        this.setState({ currentUser });
+        sessionStorage.setItem('id', currentUser.id);
+        sessionStorage.setItem('name', currentUser.name);
+        sessionStorage.setItem('email', currentUser.email);
+        sessionStorage.setItem('address', currentUser.address);
+        sessionStorage.setItem('range', currentUser.range);
+        sessionStorage.setItem('about', currentUser.about);
+        sessionStorage.setItem('completion', currentUser.completion);
+        sessionStorage.setItem('slots', currentUser.slots);
+      }
+      this.setState({ loading: false });
+    });
+  }
+
+  componentDidMount() {
+    this.getCurrentUser();
+  }
+
   render() {
+    const { currentUser } = this.state;
+
+    if (this.state.loading === true) {
+      return (
+        <h1>Loading...</h1>
+      )
+    }
+
     return (
       <BrowserRouter>
         <div>
-          <Nav/>
-          <Route path="/" exact component={SignInPage} />
-          <Route path="/profile" exact component={ProfilePage} />
-          <Route path="/inventory" exact component={InventoryPage} />
-          <Route path="/notifications" exact component={NotificationsPage} />
-          <Route path="/offers" exact component={OffersPage} />
-          <Route path="/trades" exact component={TradesPage} />
-          <Route path="/trades/1" component={TradeRoom} />
+          <Nav currentUser={currentUser} onSignOut={this.destroySession}/>
+          <Switch>
+            <Route
+              path="/sign_up"
+              render={routeProps => (
+                <SignUpPage {...routeProps} onSignUp={this.getCurrentUser} />
+              )}
+            />
+            <Route
+              path="/sign_in"
+              render={routeProps => (
+                <SignInPage {...routeProps} onSignIn={this.getCurrentUser} />
+              )}
+            />
+            <AuthRoute
+              isAuth={this.state.currentUser}
+              exact
+              path="/profile"
+              // render={routeProps => (
+              //   <ProfilePage {...routeProps} currentUser={this.state.currentUser}/>
+              // )}
+              component={ProfilePage}
+            />
+            <AuthRoute
+              isAuth={this.state.currentUser}
+              exact
+              path="/edit_profile"
+              component={EditProfilePage}
+            />
+            <AuthRoute
+              isAuth={this.state.currentUser}
+              exact
+              path="/open_trades"
+              component={OpenTradesPage}
+            />
+            <AuthRoute
+              isAuth={this.state.currentUser}
+              exact
+              path="/trades/new"
+              component={NewTrade}
+            />
+            <AuthRoute
+              isAuth={this.state.currentUser}
+              exact
+              path="/my_trades"
+              component={TradesPage}
+            />
+            <AuthRoute
+              isAuth={this.state.currentUser}
+              exact
+              path="/trades/:trade_id"
+              component={TradeRoom}
+            />
+            <Route
+              exact
+              path="/"
+              component={this.state.currentUser ? LocalMarketPage : SignInPage}
+            />
+          </Switch>
         </div>
       </BrowserRouter>
     );

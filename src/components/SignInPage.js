@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Session } from '../requests.js'
+import { Session } from '../requests.js';
+import { Link } from 'react-router-dom'
 
 export default class SignInPage extends Component {
   constructor(props) {
@@ -24,9 +25,7 @@ export default class SignInPage extends Component {
       const { onSignIn = () => {} } = this.props;
 
       if (typeof data.id === "number") {
-        this.props.history.push("/");
-
-        onSignIn();
+        onSignIn().then(() => this.props.history.push("/"));
         
       } else {
         this.setState({ errors: [{ message: "Wrong email or password!" }] });
@@ -39,25 +38,31 @@ export default class SignInPage extends Component {
 
     return (
       <main>
-        <h1>Sign In</h1>
-        <form onSubmit={this.createSession} className="">
-          {errors.length > 0 ? (
-            <div className="FormErrors">
-              {errors.map(e => e.message).join(", ")}
-            </div>
-          ) : null}
-          <div>
-            <label htmlFor="email">Email</label> <br />
-            <input type="email" name="email" id="email" />
-          </div>
+        <h1>VegExchange</h1>
+        <div className="card p-3 m-3">
+          <form onSubmit={this.createSession} className="form-group">
+            {errors.length > 0 ? (
+              <div className="FormErrors">
+                {errors.map(e => e.message).join(", ")}
+              </div>
+            ) : null}
 
-          <div>
-            <label htmlFor="password">Password</label> <br />
-            <input type="password" name="password" id="password" />
-          </div>
-          <br/>
-          <input type="submit" value="Sign In" />
-        </form>
+            <div>
+              <label htmlFor="email">Email</label> <br />
+              <input type="email" name="email" id="email" className="form-control" />
+            </div>
+
+            <div>
+              <label htmlFor="password">Password</label> <br />
+              <input type="password" name="password" id="password" className="form-control" />
+            </div>
+            <br/>
+            <span>
+              New here? <Link to='/sign_up'>Sign up!</Link>
+              <input type="submit" value="Sign In" className="btn btn-primary float-right"/>
+            </span>
+          </form>
+        </div>
       </main>
     );
   }

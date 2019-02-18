@@ -12,7 +12,14 @@ export default class LocalMarketPage extends Component {
   render() {
     return (
       <main>
-        <h1>In Your Marketplace</h1>
+        <h1>My Local Market</h1>
+        <h3>
+          <ul>
+            <li>crop S/D radar graph</li>
+            <li>completed trades feed ticker</li>
+            <li>instagram feed of #vegex</li>
+          </ul>
+        </h3>
       </main>
     )
   }
