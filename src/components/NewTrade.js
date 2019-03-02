@@ -23,7 +23,8 @@ export default class NewTrade extends Component {
     }).then(data => {
 
       if (typeof data.id === "number") {
-        this.props.history.push(`/my_trades/`);
+        alert("Trade started! Now just wait for the offers to come in.")
+        this.props.handleCancel()
         
       } else {
         this.setState({ errors: data.errors });
@@ -32,8 +33,9 @@ export default class NewTrade extends Component {
   }
 
   render() {
+    // need to switch input to selection of icon/category
     return (
-      <main>
+      <div>
         <h2>What do you have to trade?</h2>
         <form onSubmit={this.createTrade}>
           <div>
@@ -41,10 +43,11 @@ export default class NewTrade extends Component {
             <input type="produce" name="produce" id="produce" />
           </div>
           <br/>
-          <p>Once someone is interested in trading with you, barter will take place.</p>
-          <input type="submit" className="btn btn-primary" value="List my trade"/>
+          <p>Once someone is interested in trading with you, bartering over quantities will take place.</p>
+          <button onClick={this.props.handleCancel} className="btn btn-danger mr-3" value="Cancel">Cancel</button>
+          <input type="submit" className="btn btn-success" value="List my trade"/>
         </form>
-      </main>
+      </div>
     )
   }
 }

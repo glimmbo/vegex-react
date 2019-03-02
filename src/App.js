@@ -10,7 +10,7 @@ import ProfilePage from './components/ProfilePage'
 import EditProfilePage from './components/EditProfilePage'
 import OpenTradesPage from './components/OpenTradesPage'
 import TradesPage from './components/MyTradesPage'
-import TradeRoom from './components/TradeRoom'
+import TradeRoomPage from './components/TradeRoomPage'
 import LocalMarketPage from './components/LocalMarketPage'
 import NewTrade from './components/NewTrade'
 
@@ -50,9 +50,16 @@ class App extends Component {
         sessionStorage.setItem('about', currentUser.about);
         sessionStorage.setItem('completion', currentUser.completion);
         sessionStorage.setItem('slots', currentUser.slots);
+        sessionStorage.setItem('slot_available', currentUser.slot_available);
+
+        // localStorage.setItem("currentUser", JSON.stringify(currentUser))
       }
       this.setState({ loading: false });
     });
+  }
+
+  slotBoolean() {
+
   }
 
   componentDidMount() {
@@ -70,7 +77,7 @@ class App extends Component {
 
     return (
       <BrowserRouter>
-        <div>
+        <div className="container-fluid p-0">
           <Nav currentUser={currentUser} onSignOut={this.destroySession}/>
           <Switch>
             <Route
@@ -89,9 +96,6 @@ class App extends Component {
               isAuth={this.state.currentUser}
               exact
               path="/profile"
-              // render={routeProps => (
-              //   <ProfilePage {...routeProps} currentUser={this.state.currentUser}/>
-              // )}
               component={ProfilePage}
             />
             <AuthRoute
@@ -122,7 +126,7 @@ class App extends Component {
               isAuth={this.state.currentUser}
               exact
               path="/trades/:trade_id"
-              component={TradeRoom}
+              component={TradeRoomPage}
             />
             <Route
               exact

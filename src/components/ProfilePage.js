@@ -16,14 +16,13 @@ export default class ProfilePage extends Component {
 
   render() {
     return (
-      <main>
-        <h2>Profile</h2>
-        <div className="card">
+      <main className="login">
+        <div className="card mr-5 ml-5 mt-3">
           <div className="card-body">
-            <h5 className="card-title">{this.state.name}</h5>
-            <p className="card-text">{this.state.about}</p>
+            <h3 className="card-text">{this.state.name}</h3>
           </div>
           <ul className="list-group list-group-flush">
+            <li className="list-group-item">About: {this.state.about}</li>
             <li className="list-group-item">Location: {this.state.address}</li>
             <li className="list-group-item">Deal Completion Rate: {this.state.completion} %</li>
           </ul>
@@ -32,12 +31,8 @@ export default class ProfilePage extends Component {
               <Link to={`/edit_profile`}>
                 <button className="btn btn-outline-dark btn-sm col">Edit Account Details</button>
               </Link>
-              {/* <Link> */}
                 <button className="btn btn-outline-dark btn-sm col" disabled>Support (mailer job)</button>
-              {/* </Link> */}
-              {/* <Link> */}
                 <button className="btn btn-outline-dark btn-sm col" disabled>Tutorial (tour library)</button>
-              {/* </Link> */}
             </div>
           </div>
         </div>

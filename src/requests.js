@@ -31,19 +31,44 @@ export const Trade = {
     }).then(res => res.json())
   },
 
-  search(term) {
+  search(params) {
     return fetch(`${BASE_URL}/trades`, {
       credentials: "include",
       headers: {"Content-Type": "application/json"},
-      body: {
-        search: `${term}`
-      }
-    })
+      // body: JSON.stringify(params)
+    }).then(res => res.json());
   },
 
   makeOffer(params) {
     return fetch(`${BASE_URL}/trades/${params.offer.trade_id}/offers`, {
       method: "POST",
+      credentials: "include",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(params)
+    }).then(res => res.json());
+  },
+
+  acceptOffer(params) {
+    return fetch(`${BASE_URL}/trades/${params.trade.id}`, {
+      method: "PATCH",
+      credentials: "include",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(params)
+    }).then(res => res.json());
+  },
+
+  find(params) {
+    return fetch(`${BASE_URL}/trades/${params}`, {
+      credentials: "include",
+      headers: {"Content-Type": "application/json"}
+    }).then(res => res.json());
+  }
+}
+//=====
+export const Offer = {
+  accept(params) {
+    return fetch(`${BASE_URL}/trades/${params.trade_id}/offers/${params.id}`, {
+      method: "PATCH",
       credentials: "include",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(params)

@@ -37,9 +37,9 @@ export default class SignInPage extends Component {
     const { errors } = this.state;
 
     return (
-      <main>
-        <h1>VegExchange</h1>
-        <div className="card p-3 m-3">
+      <main className="login">
+        <h1 className="login-text">VegExchange</h1>
+        <div className="card p-3 m-5">
           <form onSubmit={this.createSession} className="form-group">
             {errors.length > 0 ? (
               <div className="FormErrors">

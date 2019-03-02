@@ -41,11 +41,13 @@ export default class SignUpPage extends Component {
     const { errors } = this.state;
 
     return (
-      <main>
-        <h1>Welcome to VegExchange!</h1>
-        <p>This is a platform for home gardeners and small farmers to barter their produce with other local ... gardeners and small farmers.
-          The goal is to reduce waste, build community in small agriculture, and inform growers of locally demanded produce.</p>
-        <div className="login card p-3 m-3">
+      <main className="login">
+        <h1 className="login-text">Welcome to VegExchange</h1>
+        <p className="login-text" ><b>
+        This is a platform for home gardeners and small farmers to connect and trade their produce with each other.
+          The goal is to reduce waste, build community in small agriculture, and allow growers to get more for what they grow.
+        </b></p>
+        <div className="card p-3 m-3 mr-5 ml-5">
           <form onSubmit={this.createUser} className="form-group">
             {errors.length > 0 ? (
               <div className="FormErrors">
