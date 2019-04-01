@@ -15,6 +15,7 @@ export default class OpenTradesPage extends Component {
       modalTrade: null
     }
 
+    this.handleSort = this.handleSort.bind(this);
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
     this.getSearchedTrades = this.getSearchedTrades.bind(this);
@@ -61,8 +62,17 @@ export default class OpenTradesPage extends Component {
     this.setState({ showModal: false})
   }
 
-  handleSort(event, column) {
-    console.log()
+  handleSort(event) {
+    console.log(event.target.id)
+    // if (event.target.id === 'produce' || event.target.id === 'trade') {
+    //   this.setState({
+    //     trades: this.state.trades.sort()
+    //   })
+    // } else {
+    //   this.setState({
+    //     trades: this.state.trades.sort((a, b) => a - b)
+    //   })
+    // }
   }
 
   render() {

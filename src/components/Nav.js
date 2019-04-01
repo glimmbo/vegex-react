@@ -9,6 +9,16 @@ const Nav = props => {
 
     onSignOut();
   };
+    if (!currentUser) {
+      return (
+        <nav className="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
+					<NavLink to="/">
+						<span className="navbar-brand">VegExchange</span>
+					</NavLink>
+        </nav>
+      )
+    }
+
     return (
         <nav className="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
 					<NavLink to="/">
@@ -34,13 +44,11 @@ const Nav = props => {
 								<span className="nav-link">Profile</span>
 							</NavLink>
             </li>
-            {currentUser ? (
             <li className="nav-item active">
 							<NavLink to="/sign_in" onClick={handleSignOutClick}>
 								<span className="nav-link">Sign Out</span>
 							</NavLink>
             </li>
-            ) : (null)}
           </ul>
         </div>
       </nav>

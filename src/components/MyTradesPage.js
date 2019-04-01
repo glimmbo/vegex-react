@@ -15,11 +15,11 @@ export default class MyTradesPage extends Component {
     }
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
+    this.handleTradeSubmit = this.handleTradeSubmit.bind(this);
   }
 
   componentDidMount() {
     Trade.myTrades().then(data => {
-      console.log(data)
       this.setState({
         trades: data.trades,
         offers_made: data.offers_made
@@ -27,22 +27,38 @@ export default class MyTradesPage extends Component {
     })
   }
 
-  handleOpenModal () {
+  handleOpenModal() {
     this.setState({
       showModal: true
     })
   }
 
   handleCloseModal() {
-    this.setState({ showModal: false})
+    this.setState({ showModal: false })
   }
   
+  handleTradeSubmit() {
+    Trade.myTrades().then(data => {
+      this.setState({
+        trades: data.trades,
+        offers_made: data.offers_made,
+        showModal: false
+      })
+    })
+  }
+
+  handleTradeClose() {
+    this.setState({
+      //filter array by selected id
+    })
+  }
+
   render() {
     return (
       <main>
         <div className="row" id="Trades-Offers">
           <div id="myTrades" className="card col mr-3 ml-3 p-3">
-            <h2>My Trades <span className="float-right text-muted">total slots</span></h2>
+            <h2>My Trades <span className="float-right text-muted">{sessionStorage.getItem('slots')} slots</span></h2>
             <ul className="list-group list-group-flush">
             {this.state.trades.map(trade => (
               <li className="list-group-item" key={trade.id}>
@@ -99,7 +115,7 @@ export default class MyTradesPage extends Component {
         >
           <NewTrade
             handleCancel={this.handleCloseModal}
-            handleSubmit={this.handleOpenModal}
+            handleSubmit={this.handleTradeSubmit}
           />
 
         </ReactModal>

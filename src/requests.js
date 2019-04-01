@@ -2,7 +2,7 @@ const BASE_URL = `http://localhost:3000`;
 
 export const Trade = {
   create(params) {
-    return fetch(`${BASE_URL}/trades`, {
+    return fetch(`${BASE_URL}/trades`, { // Trade.all where not currentuser
       method: "POST",
       credentials: "include",
       headers: {"Content-Type": "application/json"},
@@ -11,28 +11,28 @@ export const Trade = {
   },
 
   currentUserTrades(params) {
-    return fetch(`${BASE_URL}/${params}/trades`, {
+    return fetch(`${BASE_URL}/${params}/trades`, { // not used?
       credentials: "include",
       headers: {"Content-Type": "application/json"},
     }).then(res => res.json())
   },
 
   openTrades() {
-    return fetch(`${BASE_URL}/trades/`, {
+    return fetch(`${BASE_URL}/trades/`, { // all open trades, not current user
       credentials: "include",
       headers: {"Content-Type": "application/json"},
     }).then(res => res.json())
   },
 
   myTrades() {
-    return fetch(`${BASE_URL}/trades/my`, {
+    return fetch(`${BASE_URL}/trades/my`, { // current user's open trades
       credentials: "include",
       headers: {"Content-Type": "application/json"},
     }).then(res => res.json())
   },
 
   search(params) {
-    return fetch(`${BASE_URL}/trades`, {
+    return fetch(`${BASE_URL}/trades`, { // all open trades, filtered by term on produce column
       credentials: "include",
       headers: {"Content-Type": "application/json"},
       // body: JSON.stringify(params)
@@ -40,7 +40,7 @@ export const Trade = {
   },
 
   makeOffer(params) {
-    return fetch(`${BASE_URL}/trades/${params.offer.trade_id}/offers`, {
+    return fetch(`${BASE_URL}/trades/${params.offer.trade_id}/offers`, { 
       method: "POST",
       credentials: "include",
       headers: {"Content-Type": "application/json"},

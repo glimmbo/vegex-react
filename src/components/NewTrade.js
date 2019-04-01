@@ -21,10 +21,10 @@ export default class NewTrade extends Component {
       produce: formData.get("produce"),
       quantity: formData.get("quantity")
     }).then(data => {
-
-      if (typeof data.id === "number") {
+      console.log(data)
+      if (typeof data.trade.id === "number") {
         alert("Trade started! Now just wait for the offers to come in.")
-        this.props.handleCancel()
+        this.props.handleSubmit()
         
       } else {
         this.setState({ errors: data.errors });

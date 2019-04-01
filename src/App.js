@@ -51,15 +51,9 @@ class App extends Component {
         sessionStorage.setItem('completion', currentUser.completion);
         sessionStorage.setItem('slots', currentUser.slots);
         sessionStorage.setItem('slot_available', currentUser.slot_available);
-
-        // localStorage.setItem("currentUser", JSON.stringify(currentUser))
       }
       this.setState({ loading: false });
     });
-  }
-
-  slotBoolean() {
-
   }
 
   componentDidMount() {

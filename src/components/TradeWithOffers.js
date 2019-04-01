@@ -14,6 +14,7 @@ export default class TradeWithOffers extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCloseTrade = this.handleCloseTrade.bind(this);
   }
 
   handleChange(event) {
@@ -45,7 +46,10 @@ export default class TradeWithOffers extends Component {
           alert('updated trade with offer_id: ' + this.state.value);
         })
     })
+  }
 
+  handleCloseTrade() {
+    console.log('change aasm_state')
   }
 
   render() {
@@ -63,6 +67,9 @@ export default class TradeWithOffers extends Component {
         </select>
         <button onClick={this.handleSubmit} className="float-right" disabled={this.state.buttonDisabled}>
           Accept this offer
+        </button>
+        <button onClick={this.handleCloseTrade} className="float-right">
+          Close this trade
         </button>
       </>
     )

@@ -17,16 +17,15 @@ export default class SignInPage extends Component {
     event.preventDefault();
     const { currentTarget } = event;
     const formData = new FormData(currentTarget);
-
     Session.create({
       email: formData.get("email"),
       password: formData.get("password")
     }).then(data => {
       const { onSignIn = () => {} } = this.props;
-
       if (typeof data.id === "number") {
-        onSignIn().then(() => this.props.history.push("/"));
-        
+        onSignIn()
+        this.props.history.push("/") 
+        window.location.reload()
       } else {
         this.setState({ errors: [{ message: "Wrong email or password!" }] });
       }
